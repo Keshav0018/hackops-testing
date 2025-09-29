@@ -12,18 +12,6 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(morgan("dev"));
 
-// --- CORS ---
-const allowedOrigins = ["https://hackops-testing.onrender.com"];
-
-app.use(
-  cors({
-    origin: allowedOrigins,
-    credentials: true, // allows cookies to be sent
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization"],
-  })
-);
-
 // --- Routes ---
 app.use("/api/v1/users", userRouter);
 

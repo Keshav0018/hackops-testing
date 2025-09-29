@@ -1,6 +1,6 @@
-const apiBase = "https://hackops-backend.onrender.com/api/v1/users/";
+const apiBase = "https://hackops-backend.onrender.com/api/v1/users";
 
-// SIGNUP
+// ---------------- SIGNUP ----------------
 const signupForm = document.getElementById("signupForm");
 if (signupForm) {
   signupForm.addEventListener("submit", async (e) => {
@@ -16,19 +16,23 @@ if (signupForm) {
         { name, email, password, passwordConfirm },
         { withCredentials: true }
       );
+
       document.getElementById("signupMessage").textContent =
         "Signup successful!";
-
       console.log(res.data);
+
+      // Redirect to login page
       window.location.href = "login.html";
     } catch (err) {
-      document.getElementById("signupMessage").textContent =
-        err.response.data.message;
+      // Handle cases when err.response is undefined
+      const message =
+        err.response?.data?.message || "Signup failed. Try again!";
+      document.getElementById("signupMessage").textContent = message;
     }
   });
 }
 
-// LOGIN
+// ---------------- LOGIN ----------------
 const loginForm = document.getElementById("loginForm");
 if (loginForm) {
   loginForm.addEventListener("submit", async (e) => {
@@ -42,31 +46,36 @@ if (loginForm) {
         { email, password },
         { withCredentials: true }
       );
+
       document.getElementById("loginMessage").textContent = "Login successful!";
       console.log(res.data);
+
+      // Redirect to users page
       window.location.href = "users.html";
     } catch (err) {
-      document.getElementById("loginMessage").textContent =
-        err.response.data.message;
+      const message = err.response?.data?.message || "Login failed. Try again!";
+      document.getElementById("loginMessage").textContent = message;
     }
   });
 }
 
-// GET ALL USERS
+// ---------------- GET ALL USERS ----------------
 const getUsersBtn = document.getElementById("getUsersBtn");
 if (getUsersBtn) {
   getUsersBtn.addEventListener("click", async () => {
     try {
-      const res = await axios.get(apiBase, { withCredentials: true }); // sends cookie automatically
+      const res = await axios.get(apiBase, { withCredentials: true });
       const usersList = document.getElementById("usersList");
       usersList.innerHTML = "";
+
       res.data.data.users.forEach((user) => {
         const li = document.createElement("li");
         li.textContent = `${user.name} - ${user.email}`;
         usersList.appendChild(li);
       });
     } catch (err) {
-      alert(err.response.data.message);
+      const message = err.response?.data?.message || "Failed to fetch users!";
+      alert(message);
     }
   });
 }

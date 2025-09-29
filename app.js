@@ -1,4 +1,3 @@
-// app.js
 const express = require("express");
 const morgan = require("morgan");
 const cookieParser = require("cookie-parser");
@@ -8,33 +7,30 @@ const cors = require("cors");
 
 const app = express();
 
-// Serve frontend files
-app.use(express.static(path.join(__dirname, "public")));
-
-// Middleware
+// --- Middleware ---
 app.use(express.json());
 app.use(cookieParser());
 app.use(morgan("dev"));
 
-// --- CORS setup ---
-// app.js
-
+// --- CORS ---
+// Allow frontend to send cookies cross-origin
 app.use(
   cors({
-    origin: "https://hackops-testing.onrender.com", // your frontend URL
-    credentials: true,
+    origin: "https://hackops-testing.onrender.com", // your deployed frontend URL
+    credentials: true, // allow cookies
   })
 );
 
-// Routes
+// --- Routes ---
 app.use("/api/v1/users", userRouter);
 
-// Catch-all route for 404
-app.all(/.*/, (req, res) => {
-  res.status(404).json({
-    status: "fail",
-    message: `Can't find ${req.originalUrl} on this server!`,
-  });
+// --- Serve frontend static files ---
+app.use(express.static(path.join(__dirname, "public")));
+
+// Catch-all for client-side routing (optional)
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "public/index.html"));
 });
 
+// Export app
 module.exports = app;

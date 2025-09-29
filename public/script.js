@@ -1,4 +1,4 @@
-const apiBase = "http://127.0.0.1:3000/api/v1/users";
+const apiBase = "https://hackops-backend.onrender.com/api/v1/users/";
 
 // SIGNUP
 const signupForm = document.getElementById("signupForm");

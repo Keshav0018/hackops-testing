@@ -17,10 +17,13 @@ app.use(cookieParser());
 app.use(morgan("dev"));
 
 // --- CORS setup ---
+// app.js
+const cors = require("cors");
+
 app.use(
   cors({
-    origin: "http://127.0.0.1:3000", // frontend origin (can be port 5500 if using live server)
-    credentials: true, // allow cookies to be sent
+    origin: "https://hackops-testing.onrender.com", // your frontend URL
+    credentials: true,
   })
 );
 

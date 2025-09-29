@@ -24,10 +24,8 @@ const createSendToken = (user, statusCode, res) => {
 
   // Set JWT as cookie
   res.cookie("jwt", token, {
-    httpOnly: true, // not accessible by JS
-    secure: process.env.NODE_ENV === "production", // https only in prod
+    httpOnly: true, //
     maxAge: 90 * 24 * 60 * 60 * 1000, // 90 days
-    sameSite: "None",
   });
 
   // Hide password in response

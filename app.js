@@ -13,11 +13,14 @@ app.use(cookieParser());
 app.use(morgan("dev"));
 
 // --- CORS ---
-// Allow frontend to send cookies cross-origin
+const allowedOrigins = ["https://hackops-testing.onrender.com"];
+
 app.use(
   cors({
-    origin: "https://hackops-testing.onrender.com", // your deployed frontend URL
-    credentials: true, // allow cookies
+    origin: allowedOrigins,
+    credentials: true, // allows cookies to be sent
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
 
@@ -27,10 +30,9 @@ app.use("/api/v1/users", userRouter);
 // --- Serve frontend static files ---
 app.use(express.static(path.join(__dirname, "public")));
 
-// Catch-all for client-side routing (optional)
+// --- Catch-all for frontend routing (after API routes) ---
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "public/index.html"));
 });
 
-// Export app
 module.exports = app;

@@ -3,7 +3,7 @@ const router = express.Router();
 const authController = require("../controllers/authController");
 
 router.post("/auth/signup", authController.signup);
-router.post("/auth/login", authController.loginLimiter, authController.login);
+router.post("/auth/login", authController.login);
 
 // Temprory :
 router.get("/", authController.protect, authController.getAllUsers);

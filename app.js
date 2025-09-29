@@ -18,7 +18,6 @@ app.use(morgan("dev"));
 
 // --- CORS setup ---
 // app.js
-const cors = require("cors");
 
 app.use(
   cors({

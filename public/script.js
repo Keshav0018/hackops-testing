@@ -18,7 +18,9 @@ if (signupForm) {
       );
       document.getElementById("signupMessage").textContent =
         "Signup successful!";
+
       console.log(res.data);
+      window.location.href = "login.html";
     } catch (err) {
       document.getElementById("signupMessage").textContent =
         err.response.data.message;
